@@ -2,9 +2,8 @@
     "name": "devuri/plugin-interface",
     "description": "A simple PHP interface designed to provide a consistent structure for WordPress plugins.",
     "keywords": [
-        "dot-access",
-        "nested-data",
-        "dot-notation"
+        "WordPress",
+        "plugins"
     ],
     "type": "library",
     "license": "MIT",
