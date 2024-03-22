@@ -1,167 +1,150 @@
-# DotAccess - Convenient Access to Nested Data Using Dot Notation
+# WordPress Plugin Interface
 
-The `DotAccess` class provides a user-friendly wrapper around the functionality of the `Dflydev\DotAccessData\Data` package, allowing easy access to nested data using dot notation in PHP.
+The Plugin Interface is a PHP interface designed to provide a consistent structure for WordPress plugins. It defines a set of methods that any implementing class must adhere to, ensuring uniformity and ease of use across different plugins.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Implementing the Plugin Interface](#implementing-the-plugin-interface)
+  - [Using the Plugin Interface](#using-the-plugin-interface)
+- [Example](#example)
+- [Benefits of the Interface](#benefits-of-the-interface)
+- [License](#license)
 
 ## Installation
 
-1. Ensure you have [Composer](https://getcomposer.org/) installed on your system.
-2. Run the following command to install the package:
+Simply include the `PluginInterface.php` file in your project, or install it via Composer:
 
 ```bash
-composer require devuri/dot-access
+composer require devuri/plugin-interface
 ```
 
-## Getting Started
+## Usage
 
-1. Include the `DotAccess` class in your PHP script:
+### Implementing the Plugin Interface
 
-```php
+To create a plugin using the Plugin Interface, follow these steps:
 
-use Urisoft\DotAccess;
+1. **Implement the PluginInterface**: Create a class that implements the `PluginInterface`. This class will define the behavior of your plugin.
 
-```
+2. **Define Class Properties**: Define class properties to hold the plugin directory path and URL. These properties will be used as initialization parameters.
 
-2. Create an instance of the `DotAccess` class and pass the nested data (array or object) to the constructor:
+3. **Implement the init() Method**: Implement the `init()` method to initialize your plugin. Use the class properties to set the plugin directory path and URL.
 
-```php
-$data = [
-    'user' => [
-        'name' => 'John Doe',
-        'email' => 'john.doe@example.com',
-        'address' => [
-            'city' => 'New York',
-            'country' => 'USA',
-        ],
-    ],
-];
+4. **Implement the hooks() Method**: Implement the `hooks()` method to register any WordPress hooks (actions and filters) necessary for your plugin.
 
-$dotdata = new DotAccess($data);
-```
+### Using the Plugin Interface
 
-## Accessing Data
+To use a plugin that implements the Plugin Interface, follow these steps:
 
-The `DotAccess` class provides the following methods to access the nested data using dot notation:
+1. **Initialize the Plugin**: Call the `init()` method of the plugin class, passing the plugin directory path and URL as parameters.
 
-### Get the Value
-
-Use the `get()` method to retrieve the value associated with a dot notation key:
-
-```php
-$name = $dotdata->get('user.name');
-$email = $dotdata->get('user.email');
-$city = $dotdata->get('user.address.city');
-```
-
-### Set the Value
-
-Use the `set()` method to set a value for a dot notation key:
-
-```php
-$dotdata->set('user.age', 30);
-```
-
-### Checking for Key Existence
-
-Use the `has()` method to check if a dot notation key exists in the data:
-
-```php
-$emailExists = $dotdata->has('user.email');
-```
-
-### Removing a Key
-
-Use the `remove()` method to unset the value associated with a dot notation key:
-
-```php
-$dotdata->remove('user.address.country');
-```
+2. **Use the Plugin**: Once initialized, you can use the plugin as needed. Any hooks registered by the plugin will be automatically executed by WordPress.
 
 ## Example
 
-```php
-$data = [
-    'user' => [
-        'name' => 'John Doe',
-        'email' => 'john.doe@example.com',
-        'address' => [
-            'city' => 'New York',
-            'country' => 'USA',
-        ],
-    ],
-];
-
-$dotdata = new DotAccess($data);
-
-$name = $dotdata->get('user.name'); // Output: "John Doe"
-$dotdata->set('user.age', 30);
-$emailExists = $dotdata->has('user.email'); // Output: true
-$dotdata->remove('user.address.country');
-
-echo "Name: $name\n";
-echo "Age: " . $dotdata->get('user.age') . "\n";
-echo "Email exists: " . ($emailExists ? 'Yes' : 'No') . "\n";
-```
-
-## Wrapper Function - DataKey:get()
-
-In addition to the `DotAccess` class, we also provide a standalone wrapper function `DataKey` that simplifies accessing nested data using dot notation.
-
-### Usage
-
-The `DataKey:get()` function allows you to quickly access nested data without having to create an instance of the `DotAccess` class. It takes three parameters:
-
-1. The data array or object to access.
-2. The dot notation key to access the data.
-3. An optional default value to return if the key is not found.
-
-Here's how you can use the `DataKey:get()` function:
+Here's an example implementation of a plugin using the Plugin Interface:
 
 ```php
-$data = [
-    'user' => [
-        'name' => 'John Doe',
-        'email' => 'john.doe@example.com',
-        'address' => [
-            'city' => 'New York',
-            'country' => 'USA',
-        ],
-    ],
-];
+<?php
 
-// Using the wrapper function
-$name = DataKey:get($data, 'user.name');
-$email = DataKey:get($data, 'user.email');
-$city = DataKey:get($data, 'user.address.city');
-$zipCode = DataKey:get($data, 'user.address.zip_code', 'N/A'); // Provide a default value if the key doesn't exist
+use Urisoft\PluginInterface;
 
-echo "Name: $name\n";
-echo "Email: $email\n";
-echo "City: $city\n";
-echo "Zip Code: $zipCode\n";
+class MyPlugin implements PluginInterface
+{
+    public static $plugin_dir_path;
+    public static $plugin_url;
+
+    public static function init(string $plugin_dir_path = '', string $plugin_url = ''): object
+    {
+        static $instance = [];
+
+        $called_class = static::class;
+
+        if (!isset($instance[$called_class])) {
+            $instance[$called_class] = new $called_class();
+        }
+
+        self::$plugin_dir_path = $plugin_dir_path;
+        self::$plugin_url = $plugin_url;
+
+        return $instance[$called_class];
+    }
+
+    public function hooks(): void
+    {
+        // Register hooks here using WordPress's hook registration functions
+        // For example:
+        // add_action('init', [$this, 'my_init_function']);
+        // add_filter('the_content', [$this, 'my_content_filter']);
+    }
+}
 ```
 
-### When to Use `DataKey:get()` vs. `DotAccess`
+Below is an example of how you can instantiate the plugin class, set the plugin path and URL using the `wp_plugin_dir_path()` function, and explain the benefits of doing so:
 
-Both the `DataKey:get()` function and the `DotAccess` class serve the same purpose: accessing nested data using dot notation. The choice between them depends on your specific use case and coding preferences.
+```php
+<?php
 
-Use `DataKey:get()` when:
+// Include the PluginInterface
+use Urisoft\PluginInterface;
 
-- You prefer a simple function call over creating an instance of the `DotAccess` class.
-- You only need to access nested data at a few specific points in your code.
-- You don't need to perform multiple operations (e.g., setting, checking, or removing keys).
+// Include the Plugin class
+require_once 'MyPlugin.php'; // Replace 'MyPlugin.php' with the actual filename
 
-Use `DotAccess` class when:
+// Get the plugin directory path
+$plugin_dir_path = wp_plugin_dir_path(__FILE__);
 
-- You need to perform multiple operations on the same nested data within your code.
-- You prefer an object-oriented approach for handling nested data.
-- You need better encapsulation and separation of concerns in your code.
+// Define the plugin URL
+$plugin_url = plugins_url('', __FILE__);
 
-Both approaches provide a convenient and user-friendly way to work with nested data using dot notation. Choose the one that best fits your coding style and requirements.
+// Initialize the plugin
+$my_plugin = MyPlugin::init($plugin_dir_path, $plugin_url);
+
+// Optionally, call the hooks() method to register hooks
+$my_plugin->hooks();
+```
+
+Explanation:
+
+1. **Include Plugin Interface and Class**: The `PluginInterface` is included to ensure the class adheres to the interface.
+
+2. **Get Plugin Directory Path**: The `wp_plugin_dir_path()` function is used to retrieve the directory path of the plugin file (`__FILE__`). This ensures that the plugin directory path is always accurate.
+
+3. **Define Plugin URL**: The `plugin_dir_url()` function is used to construct the URL of the plugin directory. This URL can be used to enqueue scripts, styles, or create links within the plugin.
+
+4. **Initialize the Plugin**: The `init()` method of the `MyPlugin` class is called, passing the plugin directory path and URL as parameters. This initializes an instance of the plugin is in the application.
+
+5. **Call hooks() Method**: Optionally, the `hooks()` method of the plugin class can be called to register any WordPress hooks necessary for the plugin's functionality.
+
+Benefits:
+
+- **Consistency**: By using `wp_plugin_dir_path()` and `plugin_dir_url()`, you ensure that the plugin directory path and URL are always accurate and consistent.
+
+- **Security**: Using `wp_plugin_dir_path()` ensures that the directory path is properly sanitized and secure, reducing the risk of directory traversal attacks.
+
+- **Flexibility**: The plugin directory path and URL can be easily retrieved and used throughout the plugin code, allowing for dynamic file and URL generation without hardcoding paths or URLs.
+
+- **Compatibility**: The use of WordPress functions (`wp_plugin_dir_path()` and `plugin_dir_url()`) ensures compatibility with future WordPress updates and changes to the file structure.
+
+> using `wp_plugin_dir_path()` and `plugin_dir_url()` to set the plugin path and URL provides a robust approach to plugin development.
+
+## Benefits of the Interface
+
+- **Interface Segregation Principle (ISP)**: The interface follows the ISP by defining only the essential methods (`init()` and `hooks()`), ensuring that implementing classes aren't burdened with unnecessary dependencies.
+
+- **Separation of Concerns**: The interface separates initialization (`init()`) from hook registration (`hooks()`), promoting clearer code organization and making the plugin's behavior easier to understand and maintain.
+
+- **Clean Constructor**: By keeping the constructor clean, the interface adheres to the Single Responsibility Principle (SRP), ensuring that the class is only responsible for instantiation, which supports better code maintainability.
+
+- **Support for Standalone Unit Tests**: The clean constructor enables easy standalone unit testing. With minimal initialization logic, the class can be instantiated in isolation for focused testing, improving testability.
+
+- **Flexibility in Implementation**: The interface's minimal method requirements allow implementing classes the flexibility to achieve desired functionality, accommodating various plugin architectures and implementation strategies while ensuring consistent usage.
+
+- **Promotes Dependency Injection**: The `init()` method acts as a form of dependency injection, enabling clients to provide external dependencies (such as plugin directory path and URL) to the implementing class. This fosters decoupling and enhances flexibility and reusability.
+
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-The `DotAccess` class is a simple wrapper around the `Dflydev\DotAccessData\Data` package, which provides the core functionality for accessing nested data using dot notation. Special thanks to the authors of the `Dflydev\DotAccessData` package for their excellent work.
