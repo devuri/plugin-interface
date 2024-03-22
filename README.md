@@ -1,6 +1,6 @@
 # WordPress Plugin Interface
 
-The Plugin Interface is a PHP interface designed to provide a consistent structure for WordPress plugins. It defines a set of methods that any implementing class must adhere to, ensuring uniformity and ease of use across different plugins.
+A simple PHP interface designed to provide a consistent structure for WordPress plugins. It defines a set of methods that any implementing class must adhere to, ensuring uniformity and ease of use across different plugins.
 
 ## Table of Contents
 
