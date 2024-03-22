@@ -1,6 +1,6 @@
 {
-    "name": "devuri/dot-access",
-    "description": "A simple PHP library for accessing nested data using dot notation.",
+    "name": "devuri/plugin-interface",
+    "description": "A simple PHP interface designed to provide a consistent structure for WordPress plugins.",
     "keywords": [
         "dot-access",
         "nested-data",
@@ -17,21 +17,15 @@
         }
     ],
     "support": {
-        "source": "https://github.com/devuri/dot-access",
-        "issues": "https://github.com/devuri/dot-access/issues"
+        "source": "https://github.com/devuri/plugin-interface",
+        "issues": "https://github.com/devuri/plugin-interface/issues"
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "dflydev/dot-access-data": "^3.0"
     },
     "autoload": {
         "psr-4": {
             "Urisoft\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Urisoft\\Tests\\": "tests/"
         }
     },
     "require-dev": {
