@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Plugin Interface
+ *
+ * This file defines the PluginInterface, which provides a contract for classes representing plugins.
+ *
+ * @package Urisoft\PluginInterface
+ * @copyright Copyright (c) 2024 Uriel Wilson
+ * @license MIT License
+ */
 namespace Urisoft;
 
 /**
