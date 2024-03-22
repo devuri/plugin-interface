@@ -90,14 +90,12 @@ Below is an example of how you can instantiate the plugin class, set the plugin 
 // Include the PluginInterface
 use Urisoft\PluginInterface;
 
-// Include the Plugin class
-require_once 'MyPlugin.php'; // Replace 'MyPlugin.php' with the actual filename
 
 // Get the plugin directory path
 $plugin_dir_path = wp_plugin_dir_path(__FILE__);
 
 // Define the plugin URL
-$plugin_url = plugins_url('', __FILE__);
+$plugin_url = plugin_dir_url(__FILE__);
 
 // Initialize the plugin
 $my_plugin = MyPlugin::init($plugin_dir_path, $plugin_url);
