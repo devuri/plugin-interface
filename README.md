@@ -82,7 +82,7 @@ class MyPlugin implements PluginInterface
 }
 ```
 
-Below is an example of how you can instantiate the plugin class, set the plugin path and URL using the `wp_plugin_dir_path()` function, and explain the benefits of doing so:
+Below is an example of how you can instantiate the plugin class, set the plugin path and  url:
 
 ```php
 <?php
