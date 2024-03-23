@@ -148,7 +148,7 @@ return (new PhpCsFixer\Config())
 		'phpdoc_line_span' => true,
 		'phpdoc_no_access' => true,
 		'phpdoc_no_alias_tag' => true,
-		'phpdoc_no_package' => true,
+		//'phpdoc_no_package' => true,
 		'phpdoc_order_by_value' => true,
 		'phpdoc_order' => true,
 		'phpdoc_return_self_reference' => true,

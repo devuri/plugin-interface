@@ -54,9 +54,9 @@ use Urisoft\PluginInterface;
 class MyPlugin implements PluginInterface
 {
     public static $plugin_dir_path;
-    public static $plugin_url;
+    public static $plugin_dir_url;
 
-    public static function init(string $plugin_dir_path = '', string $plugin_url = ''): object
+    public static function init(string $plugin_dir_path = '', string $plugin_dir_url = ''): object
     {
         static $instance = [];
 
@@ -67,7 +67,7 @@ class MyPlugin implements PluginInterface
         }
 
         self::$plugin_dir_path = $plugin_dir_path;
-        self::$plugin_url = $plugin_url;
+        self::$plugin_dir_url = $plugin_dir_url;
 
         return $instance[$called_class];
     }
@@ -95,10 +95,10 @@ use Urisoft\PluginInterface;
 $plugin_dir_path = wp_plugin_dir_path(__FILE__);
 
 // Define the plugin URL
-$plugin_url = plugin_dir_url(__FILE__);
+$plugin_dir_url = plugin_dir_url(__FILE__);
 
 // Initialize the plugin
-$my_plugin = MyPlugin::init($plugin_dir_path, $plugin_url);
+$my_plugin = MyPlugin::init($plugin_dir_path, $plugin_dir_url);
 
 // Optionally, call the hooks() method to register hooks
 $my_plugin->hooks();

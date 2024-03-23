@@ -1,17 +1,19 @@
 <?php
 /**
- * Plugin Interface
+ * Plugin Interface.
  *
  * This file defines the PluginInterface, which provides a contract for classes representing plugins.
  *
  * @package Urisoft\PluginInterface
+ *
  * @copyright Copyright (c) 2024 Uriel Wilson
  * @license MIT License
  */
+
 namespace Urisoft;
 
 /**
- * Interface PluginInterface
+ * Interface PluginInterface.
  *
  * This interface defines the contract that classes representing plugins
  * must adhere to. It specifies the methods that any implementing class
@@ -27,7 +29,7 @@ interface PluginInterface
      * the plugin directory path and URL.
      *
      * @param string $plugin_dir_path The directory path of the plugin. Default is an empty string.
-     * @param string $plugin_url      The URL of the plugin. Default is an empty string.
+     * @param string $plugin_dir_url  The URL of the plugin. Default is an empty string.
      *
      * @return object An instance of the class implementing this interface.
      *
@@ -36,7 +38,7 @@ interface PluginInterface
      * The method should return an instance of the class, ensuring that only
      * one instance of the plugin is created.
      */
-    public static function init(string $plugin_dir_path = '', string $plugin_url = ''): object;
+    public static function init( string $plugin_dir_path = '', string $plugin_dir_url = ''): object;
 
     /**
      * Hooks method.
@@ -51,4 +53,3 @@ interface PluginInterface
      */
     public function hooks(): void;
 }
-
