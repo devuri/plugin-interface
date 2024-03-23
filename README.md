@@ -82,14 +82,28 @@ class MyPlugin implements PluginInterface
 }
 ```
 
+> Or you can also use the base abstract Implementation, which will includes `init()` and the required properties `$plugin_dir_path` and `$plugin_dir_url`
+```php
+<?php
+
+use Urisoft\AbstractPlugin;
+
+class MyPlugin extends AbstractPlugin
+{
+    public function hooks(): void
+    {
+        // Register hooks here using WordPress's hook registration functions
+        // For example:
+        // add_action('init', [$this, 'my_init_function']);
+        // add_filter('the_content', [$this, 'my_content_filter']);
+    }
+}
+```
+
 Below is an example of how you can instantiate the plugin class, set the plugin path and  url:
 
 ```php
 <?php
-
-// Include the PluginInterface
-use Urisoft\PluginInterface;
-
 
 // Get the plugin directory path
 $plugin_dir_path = wp_plugin_dir_path(__FILE__);
