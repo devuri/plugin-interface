@@ -82,7 +82,7 @@ class MyPlugin implements PluginInterface
 }
 ```
 
-> Or you can also use the base abstract Implementation, which will includes `init()` and the required properties `$plugin_dir_path` and `$plugin_dir_url`
+> Or you can also use the base abstract Implementation, which will include `init()` and the required properties `$plugin_dir_path` and `$plugin_dir_url`
 ```php
 <?php
 
