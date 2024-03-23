@@ -54,9 +54,9 @@ use Urisoft\PluginInterface;
 class MyPlugin implements PluginInterface
 {
     public static $plugin_dir_path;
-    public static $plugin_url;
+    public static $plugin_dir_url;
 
-    public static function init(string $plugin_dir_path = '', string $plugin_url = ''): object
+    public static function init(string $plugin_dir_path = '', string $plugin_dir_url = ''): object
     {
         static $instance = [];
 
@@ -67,11 +67,29 @@ class MyPlugin implements PluginInterface
         }
 
         self::$plugin_dir_path = $plugin_dir_path;
-        self::$plugin_url = $plugin_url;
+        self::$plugin_dir_url = $plugin_dir_url;
 
         return $instance[$called_class];
     }
 
+    public function hooks(): void
+    {
+        // Register hooks here using WordPress's hook registration functions
+        // For example:
+        // add_action('init', [$this, 'my_init_function']);
+        // add_filter('the_content', [$this, 'my_content_filter']);
+    }
+}
+```
+
+> Or you can also use the base abstract Implementation, which will includes `init()` and the required properties `$plugin_dir_path` and `$plugin_dir_url`
+```php
+<?php
+
+use Urisoft\AbstractPlugin;
+
+class MyPlugin extends AbstractPlugin
+{
     public function hooks(): void
     {
         // Register hooks here using WordPress's hook registration functions
@@ -87,18 +105,14 @@ Below is an example of how you can instantiate the plugin class, set the plugin 
 ```php
 <?php
 
-// Include the PluginInterface
-use Urisoft\PluginInterface;
-
-
 // Get the plugin directory path
 $plugin_dir_path = wp_plugin_dir_path(__FILE__);
 
 // Define the plugin URL
-$plugin_url = plugin_dir_url(__FILE__);
+$plugin_dir_url = plugin_dir_url(__FILE__);
 
 // Initialize the plugin
-$my_plugin = MyPlugin::init($plugin_dir_path, $plugin_url);
+$my_plugin = MyPlugin::init($plugin_dir_path, $plugin_dir_url);
 
 // Optionally, call the hooks() method to register hooks
 $my_plugin->hooks();

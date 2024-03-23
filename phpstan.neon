@@ -1,8 +1,6 @@
 includes:
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
 parameters:
-    bootstrapFiles:
-        - tests/stubs.php
     tmpDir: tmp
     level: 2
     inferPrivatePropertyTypeFromConstructor: true
