@@ -27,6 +27,11 @@
             "Urisoft\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require-dev": {
         "10up/phpcs-composer": "dev-master",
         "phpstan/phpstan": "^1.8",
