@@ -2,16 +2,6 @@
 
 A simple PHP interface designed to provide a consistent structure for WordPress plugins. It defines a set of methods that any implementing class must adhere to, ensuring uniformity and ease of use across different plugins.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Implementing the Plugin Interface](#implementing-the-plugin-interface)
-  - [Using the Plugin Interface](#using-the-plugin-interface)
-- [Example](#example)
-- [Benefits of the Interface](#benefits-of-the-interface)
-- [License](#license)
-
 ## Installation
 
 Simply include the `PluginInterface.php` file in your project, or install it via Composer:
@@ -142,6 +132,77 @@ Benefits:
 
 > using `wp_plugin_dir_path()` and `plugin_dir_url()` to set the plugin path and URL provides a robust approach to plugin development.
 
+
+## TraitInstalled
+
+The `TraitInstalled` on `AbstractPlugin` provides utility methods to check if a WordPress plugin is installed and active. It helps manage plugin dependencies efficiently.
+
+- **Check if a plugin is installed**
+- **Check if a plugin is active**
+- **Retrieve all installed plugins**
+
+### 1. `MyPlugin::is_installed($plugin_file)`
+
+Checks if a plugin is installed.
+
+- **Parameter**:  
+  `$plugin_file` (string) - Path to the plugin file, e.g., `'example-plugin/example-plugin.php'`.
+
+- **Returns**:  
+  `bool` - `true` if installed, `false` otherwise.
+
+- **Example**:
+    ```php
+    if (MyPlugin::is_installed('example-plugin/example-plugin.php')) {
+        echo 'Plugin is installed.';
+    }
+    ```
+
+### 2. `MyPlugin::is_active($plugin_file)`
+
+Checks if a plugin is active.
+
+- **Parameter**:  
+  `$plugin_file` (string) - Path to the plugin file, e.g., `'example-plugin/example-plugin.php'`.
+
+- **Returns**:  
+  `bool` - `true` if active, `false` otherwise.
+
+- **Example**:
+    ```php
+    if (MyPlugin::is_active('example-plugin/example-plugin.php')) {
+        echo 'Plugin is active.';
+    }
+    ```
+
+### 3. `MyPlugin::get_installed_plugins()`
+
+Retrieves all installed plugins.
+
+- **Returns**:  
+  `array` - An array of installed plugins.
+
+- **Example**:
+    ```php
+    $installed_plugins = MyPlugin::get_installed_plugins();
+    print_r($installed_plugins);
+    ```
+
+### Example Usage
+
+Check if a plugin is both installed and active:
+
+```php
+function is_example_plugin_ready() {
+    $plugin_file = 'example-plugin/example-plugin.php';
+    return MyPlugin::is_installed($plugin_file) && Plugin::is_active($plugin_file);
+}
+
+if (!is_example_plugin_ready()) {
+    // Show admin notice or handle plugin dependency
+}
+```
+
 ## Benefits of the Interface
 
 - **Interface Segregation Principle (ISP)**: The interface follows the ISP by defining only the essential methods (`init()` and `hooks()`), ensuring that implementing classes aren't burdened with unnecessary dependencies.
@@ -155,7 +216,6 @@ Benefits:
 - **Flexibility in Implementation**: The interface's minimal method requirements allow implementing classes the flexibility to achieve desired functionality, accommodating various plugin architectures and implementation strategies while ensuring consistent usage.
 
 - **Promotes Dependency Injection**: The `init()` method acts as a form of dependency injection, enabling clients to provide external dependencies (such as plugin directory path and URL) to the implementing class. This fosters decoupling and enhances flexibility and reusability.
-
 
 ## License
 
