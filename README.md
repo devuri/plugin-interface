@@ -195,7 +195,7 @@ Check if a plugin is both installed and active:
 ```php
 function is_example_plugin_ready() {
     $plugin_file = 'example-plugin/example-plugin.php';
-    return MyPlugin::is_installed($plugin_file) && Plugin::is_active($plugin_file);
+    return MyPlugin::is_installed($plugin_file) && MyPlugin::is_active($plugin_file);
 }
 
 if (!is_example_plugin_ready()) {
