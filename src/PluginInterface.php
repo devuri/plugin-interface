@@ -38,7 +38,7 @@ interface PluginInterface
      * The method should return an instance of the class, ensuring that only
      * one instance of the plugin is created.
      */
-    public static function init( string $plugin_dir_path = '', string $plugin_dir_url = ''): PluginInterface;
+    public static function init( string $plugin_dir_path = '', string $plugin_dir_url = ''): self;
 
     /**
      * Hooks method.

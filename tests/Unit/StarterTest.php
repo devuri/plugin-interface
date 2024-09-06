@@ -5,6 +5,11 @@ namespace Tests\Unit;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class StarterTest extends TestCase
 {
     /**
