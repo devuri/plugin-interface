@@ -14,6 +14,8 @@ namespace Urisoft;
 
 abstract class AbstractPlugin implements PluginInterface
 {
+    use TraitInstalled;
+
     public static $plugin_dir_path;
     public static $plugin_dir_url;
 
