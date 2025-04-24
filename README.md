@@ -96,7 +96,7 @@ Below is an example of how you can instantiate the plugin class, set the plugin 
 <?php
 
 // Get the plugin directory path
-$plugin_dir_path = wp_plugin_dir_path(__FILE__);
+$plugin_dir_path = plugin_dir_path( __DIR__ );
 
 // Define the plugin URL
 $plugin_dir_url = plugin_dir_url(__FILE__);
